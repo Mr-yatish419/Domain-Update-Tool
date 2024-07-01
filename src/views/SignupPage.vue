@@ -241,12 +241,12 @@
     width: 100%;
     padding: 20px;
     box-sizing: border-box;
-    margin: 0 auto; /* Center horizontally */
+    margin: 0 auto; 
   }
   
   .form-message {
-    font-size: 14px; /* Adjust font size as needed */
-    color: #6c757d; /* Adjust color as needed */
+    font-size: 14px; 
+    color: #6c757d; 
   }
 
   /*auth button*/ 
