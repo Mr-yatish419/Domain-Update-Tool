@@ -190,7 +190,7 @@ export default {
       if (accessToken) {
         try {
           const Received_response = await axios.post('http://localhost/sentence-validation/google-callback.php', { access_token: accessToken });
-          console.log("Backend Response:", Received_response.data);
+          // console.log("Backend Response:", Received_response.data);
           if (Received_response.data && Received_response.data.success) {
               const user_id = Received_response.data.user.id;
               const email = Received_response.data.user.email;
