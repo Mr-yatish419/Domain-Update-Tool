@@ -301,7 +301,7 @@
   }
   
   .custom-btn {
-    width: 100%; /* Full width button for better responsiveness */
+    width: 100%;
     max-width: 200px;
   }
   
