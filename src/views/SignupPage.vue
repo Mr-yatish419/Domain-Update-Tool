@@ -287,6 +287,7 @@
 .oauth-button.facebook:hover {
     background-color: #f5f5f5;
 }
+/*auth button*/ 
   
   .shadow {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
