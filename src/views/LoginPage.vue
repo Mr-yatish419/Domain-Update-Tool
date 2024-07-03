@@ -2,7 +2,7 @@
   <div class="main-container">
     <div class="container card login-card">
       <!-- Loading spinner -->
-      <div v-if="loading" class="text-center my-3">
+      <div v-if="loading" class="text-center my-2">
         <div class="spinner-border text-primary" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>
@@ -19,12 +19,7 @@
         <form @submit.prevent="onLogin()">
           <div class="form-group my-4 mx-4">
             <label class="form-label">Email</label>
-            <input
-              type="text"
-              class="form-control shadow mb-4"
-              required
-              v-model.trim="email"
-            />
+            <input type="text" class="form-control shadow mb-4" required v-model.trim="email"/>
             <div class="error" v-if="errors.email">
               {{ errors.email }}
             </div>
@@ -52,7 +47,7 @@
           </div>
 
           <div class="mt-4 text-center position mx-2">
-            <p>Don't have an account? <router-link to="/signup">Signup here</router-link>.</p>
+            <p>Don't have an account? <router-link to="/signup">Signup here</router-link></p>
           </div>
 
           <div class="container-row mt-5">
@@ -208,6 +203,7 @@ export default {
         }
       } else {
         this.error = 'Invalid OAuth response.';
+        this.$router.push('/login');
       }
     },
   },
@@ -249,7 +245,6 @@ body {
 
 }
 
-
 .main-container {
   display: flex;
   justify-content: center;
@@ -272,7 +267,19 @@ body {
   width: 100%;
   max-width: 200px;
   margin: 0 auto; /* Center horizontally */
+  transition: transform 0.4s ease;
+  -webkit-transition: transform 0.4s ease; /* For Safari */
+  -moz-transition: transform 0.4s ease; /* For Firefox */
+  -o-transition: transform 0.4s ease; /* For Opera */
+  cursor: pointer;
 }
+
+ .custom-btn:hover {
+   transform: translateY(-6px);
+   -webkit-transform: translateY(-6px); /* For Safari */
+   -moz-transform: translateY(-6px); /* For Firefox */
+   -o-transform: translateY(-6px); /* For Opera */
+ }
 
 /*auth button*/ 
 .oauth-button {
@@ -340,20 +347,63 @@ body {
 }
 
 @media (max-width: 768px) {
+    .container {
+      padding: 15px;
+    }
+  
+    .mb-3.mx-5 {
+      margin-left: 10px !important;
+      margin-right: 10px !important;
+    }
 
-  .login-card {
-    padding: 15px;
-    margin: 0 auto;
-  }
+    .custom-btn {
+      width: 100%;
+      max-width: 200px;
+      margin: 0 auto; /* Center horizontally */
+      transition: transform 0.4s ease;
+      -webkit-transition: transform 0.4s ease; /* For Safari */
+      -moz-transition: transform 0.4s ease; /* For Firefox */
+      -o-transition: transform 0.4s ease; /* For Opera */
+      cursor: pointer;
+    }
 
-  .form-label {
-    font-size: 14px;
-  }
+    .custom-btn:hover {
+      transform: translateY(-6px);
+      -webkit-transform: translateY(-6px); /* For Safari */
+      -moz-transform: translateY(-6px); /* For Firefox */
+      -o-transform: translateY(-6px); /* For Opera */
+    }
 
-  .form-control {
-    font-size: 14px;
   }
-}
+  
+  @media (max-width: 576px) {
+    .container {
+      padding: 10px;
+    }
+  
+    .mb-3.mx-5 {
+      margin-left: 5px !important;
+      margin-right: 5px !important;
+    }
+  
+    .main-container {
+      padding: 10px;
+    }
+
+    .custom-btn {
+      transition: transform 0.4s ease;
+      -webkit-transition: transform 0.4s ease; /* For Safari */
+      -moz-transition: transform 0.4s ease; /* For Firefox */
+      -o-transition: transform 0.4s ease; /* For Opera */
+    }
+
+    .custom-btn:hover {
+      transform: translateY(-6px);
+      -webkit-transform: translateY(-6px); /* For Safari */
+      -moz-transform: translateY(-6px); /* For Firefox */
+      -o-transform: translateY(-6px); /* For Opera */
+    }
+  }
 
 </style>
 

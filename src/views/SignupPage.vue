@@ -41,7 +41,7 @@
             <button type="submit" class="btn btn-primary custom-btn shadow">Signup</button>
           </div>
           <div class="text-center mt-3 position mx-2">
-            <p>Already have an account? <router-link to="./login">login here</router-link>.</p>
+            <p>Already have an account? <router-link to="./login">Login here</router-link></p>
           </div>
           <div class="container-row mt-5">
             <div class="row">
@@ -194,6 +194,7 @@
         }
       } else {
         this.error = 'Invalid OAuth response.';
+        this.$router.push('/login');
       }
     },
   },
@@ -304,7 +305,13 @@
   .custom-btn {
     width: 100%;
     max-width: 200px;
+    transition: transform 0.4s ease;
+    cursor: pointer;
   }
+
+  .custom-btn:hover {
+   transform: translateY(-6px);
+ }
   
   .position a {
     text-decoration: none;
@@ -323,8 +330,25 @@
       margin-left: 10px !important;
       margin-right: 10px !important;
     }
+
+    .custom-btn {
+      transition: transform 0.4s ease;
+      -webkit-transition: transform 0.4s ease; /* For Safari */
+      -moz-transition: transform 0.4s ease; /* For Firefox */
+      -o-transition: transform 0.4s ease; /* For Opera */
+    }
+
+    .custom-btn:hover {
+      transform: translateY(-6px);
+      -webkit-transform: translateY(-6px); /* For Safari */
+      -moz-transform: translateY(-6px); /* For Firefox */
+      -o-transform: translateY(-6px); /* For Opera */
+    }
+    
   }
   
+
+
   @media (max-width: 576px) {
     .container {
       padding: 10px;
@@ -337,6 +361,20 @@
   
     .main-container {
       padding: 10px;
+    }
+
+    .custom-btn {
+      transition: transform 0.4s ease;
+      -webkit-transition: transform 0.4s ease; /* For Safari */
+      -moz-transition: transform 0.4s ease; /* For Firefox */
+      -o-transition: transform 0.4s ease; /* For Opera */
+    }
+
+    .custom-btn:hover {
+      transform: translateY(-6px);
+      -webkit-transform: translateY(-6px); /* For Safari */
+      -moz-transform: translateY(-6px); /* For Firefox */
+      -o-transform: translateY(-6px); /* For Opera */
     }
   }
   </style>
