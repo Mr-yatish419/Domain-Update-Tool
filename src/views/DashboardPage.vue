@@ -172,8 +172,8 @@ export default {
 
 .exit-button {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: -60px;
+  left: 0;
   background-color: #ff000096;
   color: white;
   border: none;

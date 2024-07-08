@@ -13,22 +13,22 @@
           <h3 class="text-center mt-3 label">Log In</h3>
           <hr />
         </div>
-        <div class="alert alert-danger" v-if="error">
+        <div class="conn-error alert alert-danger" v-if="error">
           {{ error }}
         </div>
         <form @submit.prevent="onLogin()">
           <div class="form-group my-4 mx-4">
             <label class="form-label">Email</label>
-            <input type="text" class="form-control shadow mb-4" required v-model.trim="email"/>
-            <div class="error" v-if="errors.email">
+            <input type="text" class="form-control shadow " placeholder="marcia@polo.com" required v-model.trim="email"/>
+            <div class="error alert alert-danger" v-if="errors.email">
               {{ errors.email }}
             </div>
           </div>
 
           <div class="form-group mb-3 mx-4">
             <label class="form-label">Password</label>
-            <input type="password" class="form-control shadow" required v-model.trim="password" />
-            <div class="error" v-if="errors.password">
+            <input type="password" class="form-control shadow" placeholder="••••••••" required v-model.trim="password" />
+            <div class="error alert alert-danger" v-if="errors.password">
               {{ errors.password }}
             </div>
             <div class="forgot-password-link">
@@ -263,6 +263,14 @@ body {
   padding: 20px;
 }
 
+
+.alert-danger{
+  height:30px;
+  padding-top: 5px;
+  padding-bottom:20px;
+  font-size: small;
+}
+
 .custom-btn {
   width: 100%;
   max-width: 200px;
@@ -350,11 +358,16 @@ body {
     .container {
       padding: 15px;
     }
+
+    .alert-danger{
+      font-size: smaller;
+    }
   
     .mb-3.mx-5 {
       margin-left: 10px !important;
       margin-right: 10px !important;
     }
+
 
     .custom-btn {
       width: 100%;
@@ -381,6 +394,10 @@ body {
       padding: 10px;
     }
   
+    .alert-danger{
+      font-size: smaller;
+    }
+  
     .mb-3.mx-5 {
       margin-left: 5px !important;
       margin-right: 5px !important;
@@ -405,115 +422,19 @@ body {
     }
   }
 
+  @media (max-width: 380px){
+    .conn-error{
+      height:50px;
+      padding-top: 5px;
+      padding-bottom:20px;
+      font-size:x-small;
+    }
+
+    .alert-danger{
+      font-size: smaller;
+    }
+  }
+
 </style>
 
-<!-- working css -->
 
-<!-- <style >
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-
-.main-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh; /* Full viewport height */
-  padding: 20px;
-  box-sizing: border-box;
-  background: url('../assets/Abstract-Gradient-Background.jpg') no-repeat center center fixed; /* Adjust the path as needed */
-  background-size: cover;
-}
-
-.login-card {
-  /* background: #95af62; */
-  background:rgba(255, 255, 255, 0.8);
-  border-radius: 10px;
-  width: 100%;
-  max-width: 400px;
-  padding: 20px;
-}
-
-.custom-btn {
-  width: 100%;
-  max-width: 200px;
-}
-
-
-/*auth button*/ 
-.oauth-button {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 140px;
-    justify-content: center;
-    background-color: white;
-    text-decoration: none;
-    color: inherit;
-}
-
-.oauth-button img.oauth-logo {
-    width: 25px;
-    height:auto;
-    margin-right: 10px;
-}
-
-.oauth-button.google {
-    border-color: #131212;
-    color: #131212;
-}
-
-.oauth-button.facebook {
-    border-color: #3b5998;
-    color: #3b5998;
-}
-
-.oauth-button.google:hover {
-    background-color: #f5f5f5;
-}
-
-.oauth-button.facebook:hover {
-    background-color: #f5f5f5;
-}
-
-.shadow {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.forgot-password-link {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 5px;
-}
-
-.forgot-password-link a {
-  text-decoration: none;
-}
-
-.forgot-password-link a:hover {
-  text-decoration: underline;
-}
-
-.position a {
-  text-decoration: none;
-}
-
-.position a:hover {
-  text-decoration: underline;
-}
-
-@media (max-width: 768px) {
-  .login-card {
-    padding: 15px;
-  }
-
-  .form-label {
-    font-size: 14px;
-  }
-
-  .form-control {
-    font-size: 14px;
-  }
-}
-</style> -->

@@ -6,13 +6,13 @@
           <li class="nav-item">
             <a class="nav-link" href="/login">
               <img src="../assets/user.png" alt="Overview Icon" style="width:16px; height:auto; margin-right: 8px;" />
-              login
+              Login
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/signup">
               <img src="../assets/add-user.png" alt="Specs Icon" class="nav-icon" />
-              signup
+              Signup
             </a>
           </li>
           <li class="nav-item">
@@ -26,7 +26,7 @@
     </div>
 
     <!-- Profile Dropdown -->
-    <div class="profile-dropdown fixed-right" @click="toggleDropdown">
+    <div class="logout-dropdown fixed-right" @click="toggleDropdown">
       <img src="../assets/account.png" alt="Profile" class="profile-icon" />
       <div v-if="showDropdown" class="dropdown-content">
         <ul>
@@ -44,7 +44,7 @@
     </div>
 
     <div class="container-wrapper">
-      <div class="container card col-md-12 ml-sm-2 bg-dark bg-gradient">
+      <div class="container card col-md-12 ml-sm-2 my-2 bg-dark bg-gradient">
         <div class="row card-body">
           <div class="col-md-9 mx-auto">
             <div class="button-container">
@@ -60,21 +60,30 @@
                 <img src="../assets/check.png" @click="updateDomainInDatabase"
                   :class="{ 'disabled': updateButtonDisabled }" class="Updateimage-button" alt="Update Domain"/>
               </div>
-              <select class="dropdown-container form-select col-4 dropup" style="text-align: center" v-if="showDropdownContainer" v-model="selectedDomain" @change="handleDomainChange">
-                <option v-for="(domain, index) in predefinedDomains" :key="index">{{ domain }}</option>
+              <select class="dropdown-container form-select col-4 dropup show" style="text-align: center" v-if="showDropdownContainer" v-model="selectedDomain" @change="handleDomainChange">
+                <option class="dropdown-options" v-for="(domain, index) in predefinedDomains" :key="index">{{ domain }}</option>
               </select>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+     <!-- Success Modal -->
+    <b-modal id="completion-modal" ref="completionModal" title="Success" hide-footer>
+      <p class="my-4" style="font-size: larger">Success 😎</p>
+    </b-modal>
   </div>
 </template>
 
 <script>
 import Cookies from 'js-cookie';
+import { BModal } from 'bootstrap-vue-next'; // Import BootstrapVueNext modal
 
 export default {
+  components: {
+    BModal, // Register BootstrapVue modal component
+  },
   data() {
     return {
       sentencesWithDomains: [],
@@ -88,7 +97,7 @@ export default {
       isWrongButtonClicked: false,
       userEmail: '',
       userId: '',
-      predefinedDomains: [] // This will be populated from filteredDomains
+      predefinedDomains: ['Administrative','Law','Education','Health','Agriculture','Tourism','Technical','Climate','Others'], // This will be populated from filteredDomains
     };
   },
   methods: {
@@ -106,7 +115,7 @@ export default {
             sentence: file.Sentence.trim(),
             domain: file.Domain.trim()
           }));
-          this.extractDomains();
+          // this.extractDomains();
           this.currentSentenceIndex = 0;
           this.setCurrentSentence();
         } else {
@@ -117,10 +126,10 @@ export default {
       }
     },
 
-    extractDomains() {
-      const domains = new Set(this.sentencesWithDomains.map(item => item.domain));
-      this.predefinedDomains = Array.from(domains);
-    },
+    // extractDomains() {
+    //   const domains = new Set(this.sentencesWithDomains.map(item => item.domain));
+    //   this.predefinedDomains = Array.from(domains);
+    // },
     
     setCurrentSentence() {
       if (this.sentencesWithDomains.length > 0) {
@@ -133,11 +142,14 @@ export default {
         this.selectedId = '';
       }
     },
+
     nextSentence() {
       if (this.currentSentenceIndex < this.sentencesWithDomains.length - 1) {
         this.currentSentenceIndex++;
         this.setCurrentSentence();
         this.isWrongButtonClicked = false; // Reset the flag for the next sentence
+      } else {
+        this.showCompletionModal(); // Show modal when end of file is reached
       }
     },
 
@@ -243,8 +255,14 @@ export default {
         this.showDropdownContainer = !this.showDropdownContainer;
         this.isWrongButtonClicked = true; // Set the flag to true after the first click
       }
-    }
+    },
+
+    showCompletionModal() {
+      this.$refs.completionModal.show();
+     }
   },
+
+  
   async created() {
     console.log('Component created...');
     await this.fetchFilesFromBackend();
@@ -266,13 +284,19 @@ export default {
 </script>
 
 <style>
-
 body {
   height: 100%;
   margin: 0;
   padding: 0;
   background: linear-gradient(to bottom, #5f4d93, #935d8c, #efa8b0);
 }
+
+/* .navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+} */
 
 .custom-navbar {
   display: flex;
@@ -304,7 +328,13 @@ body {
   text-decoration: none;
   color: #000;
   font-weight: 500;
+  transition: color 0.3s, transform 0.3s;
 }
+
+.nav-link:hover {
+  transform: scale(1.1);
+}
+
 
 .nav-icon {
   width: 20px;
@@ -312,11 +342,12 @@ body {
   margin-right: 8px;
 }
 
-.profile-dropdown {
+.logout-dropdown {
   position: fixed;
   top: 16px; /* Adjust as needed */
-  right: 5rem; /* Adjust as needed */
+  right: 3.5rem; /* Adjust as needed */
   display: inline-block;
+  z-index: 9999;
 }
 
 .profile-icon {
@@ -324,6 +355,11 @@ body {
   width: 40px;
   height: auto;
   cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.profile-icon:hover {
+  transform: scale(1.1);
 }
 
 .Wrongimage-button {
@@ -349,6 +385,19 @@ body {
   min-width: 180px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
+  transform: translateY(-10px);
+  animation: dropdownSlideIn 0.3s forwards;
+}
+
+@keyframes dropdownSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .dropdown-content ul {
@@ -387,18 +436,14 @@ body {
   text-align: center;
 }
 
-.navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-}
 
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+  overflow: hidden;
   padding: 20px; /* Add padding to the container */
 }
 
@@ -440,7 +485,7 @@ body {
   cursor: pointer; 
 } */
 
-.image-button.disabled {
+.image-button .disabled {
   opacity: 0.5; /* Reduce opacity for disabled state */
   cursor: not-allowed; /* Show not-allowed cursor for disabled state */
 }
@@ -465,10 +510,39 @@ body {
   margin: 0 10px; /* Adjust margin as needed */
 }
 
+
+
 .dropdown-container {
   margin-top: 50px;
   margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: dropdownSlideIn 0.3s forwards;
+  transition: opacity 0.3s, transform 0.3s;
 }
+
+@keyframes dropdownSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-container .show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+.dropdown-options {
+  text-align: center;
+  font-weight: bold;
+}
+
 
 .container-wrapper {
   border-radius: 20px !important; /* Add border radius */
@@ -485,8 +559,10 @@ body {
   .nav-item {
     margin: 5px 0;
   }
-  .profile-dropdown {
+  .logout-dropdown {
     right: 1rem;
+    top:-5px;
+    z-index: 9999;
   }
   .container-wrapper {
     margin-left: 0; 
@@ -500,6 +576,13 @@ body {
   .nav-link {
     font-size: 14px;
   }
+
+  .logout-dropdown {
+    right: 1rem;
+    top:4rem;
+    z-index: 9999;
+  }
+
   .profile-icon {
     width: 30px;
   }
@@ -507,4 +590,6 @@ body {
     margin-left: 0; 
   }
 }
+
+
 </style>
